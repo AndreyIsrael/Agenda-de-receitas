@@ -1,4 +1,6 @@
 from django.db import models
+from django.conf import settings
+from django.utils import timezone
 
 class Ingrediente(models.Model):
     UNIDADE_MEDIDA_CHOICES= (
@@ -11,6 +13,8 @@ class Ingrediente(models.Model):
     observacoes=models.TextField(blank=True)
     unidade_usada= models.IntegerField(default=1,)
     calorias_unidade=models.IntegerField(default=0)
+    created_date = models.DateTimeField(default=timezone.now)
+    published_date = models.DateTimeField(blank=True, null=True)
     
     @property
     def total_calorias_ingrediente(self):
@@ -18,17 +22,33 @@ class Ingrediente(models.Model):
             return self.unidade_usada * self.calorias_unidade
         else:
             return self.calorias_unidade
+    
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+    def __str__(self):
+        return self.nomeingrediente
+
         
 
 
 class Receita(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     nomereceita=models.CharField(max_length=128)
     ingredientes=models.ManyToManyField(Ingrediente)
     modo_de_preparo= models.TextField(blank=True)
-    
+    created_date = models.DateTimeField(default=timezone.now)
+    published_date = models.DateTimeField(blank=True, null=True)
+   
     @property
     def calorias_total_receita(self):
         return sum(ing.total_calorias_ingrediente for ing in self.ingredientes.all())
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+    def __str__(self):
+        return self.nomereceita
+
 
 
     # Create your models here.

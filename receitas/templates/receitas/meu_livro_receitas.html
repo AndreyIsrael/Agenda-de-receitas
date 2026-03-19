@@ -1,0 +1,39 @@
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/meulivro.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            {% for receita in meulivro %}
+            <div class="receita-item">
+                <h3>{{ receita.nomereceita }}</h3>
+
+                <h2>{{ receita.calorias_total_receita }} kcal</h2>
+
+                <h2> Ingredientes:{{receita.ingredientes.all|join:", "}}</h2>
+                {% for ingrediente in receita.ingredientes.all %}
+                <p>Ingrediente: {{ ingrediente.nomeingrediente }} - Calorias: {{ ingrediente.total_calorias_ingrediente}} - Unidade usada- {{ingrediente.tipo_unidade}}:{{ingrediente.unidade_usada}}
+                    {% if ingrediente.observacoes %}
+                    | <strong>Obs:</strong> <em>{{ ingrediente.observacoes }}</em>
+                    {% endif %}
+                </p>
+                {% endfor %}
+
+                <p>Publicado em: {{ receita.published_date }}</p>
+            </div>
+            {% empty %}
+            <p>Você ainda não tem receitas no seu livro.</p>
+            {% endfor %}
+        </div>
+        <div class="botao-criar-receita">
+            <a href="/criar_receita" class=" button">
+                Criar receita
+            </a>
+        </div>
+    </div>
+</body>
