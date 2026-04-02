@@ -14,6 +14,10 @@
                 <h3>{{ receita.nomereceita }}</h3>
 
                 <h2>{{ receita.calorias_total_receita }} kcal</h2>
+                {%if receita.receita_imagem%}
+                   <img src=" {{ receita.receita_imagem.url}}" width="300">
+                {% endif %}
+                
 
                 <h2> Ingredientes:{{receita.ingredientes.all|join:", "}}</h2>
                 {% for ingrediente in receita.ingredientes.all %}
@@ -21,6 +25,9 @@
                     {% if ingrediente.observacoes %}
                     | <strong>Obs:</strong> <em>{{ ingrediente.observacoes }}</em>
                     {% endif %}
+                    {%if ingrediente.ingrediente_imagem%}
+                   <img src=" {{ ingredientes.ingrediente_imagem.url}}" width="300">
+                {% endif %}
                 </p>
                 {% endfor %}
 

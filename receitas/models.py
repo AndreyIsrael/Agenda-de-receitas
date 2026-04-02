@@ -15,6 +15,7 @@ class Ingrediente(models.Model):
     calorias_unidade=models.IntegerField(default=0)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
+    ingrediente_imagem= models.ImageField(null=True, blank=True, upload_to="images/")
     
     @property
     def total_calorias_ingrediente(self):
@@ -39,6 +40,7 @@ class Receita(models.Model):
     modo_de_preparo= models.TextField(blank=True)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
+    receita_imagem= models.ImageField(null=True, blank=True, upload_to="images/")
    
     @property
     def calorias_total_receita(self):
