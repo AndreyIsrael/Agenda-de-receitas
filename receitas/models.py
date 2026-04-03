@@ -51,6 +51,6 @@ class Receita(models.Model):
     def __str__(self):
         return self.nomereceita
 
-
+    
 
     # Create your models here.
