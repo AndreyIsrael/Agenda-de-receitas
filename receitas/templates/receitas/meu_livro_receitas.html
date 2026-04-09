@@ -11,7 +11,7 @@
         <div>
             {% for receita in meulivro %}
             <div class="receita-item">
-                <h3>{{ receita.nomereceita }}</h3>
+                <h3>{{ receita.nome_da_receita }}</h3>
 
                 <h2>{{ receita.calorias_total_receita }} kcal</h2>
                 {%if receita.receita_imagem%}
@@ -39,7 +39,7 @@
         </div>
         <div class="botao-criar-receita">
             <a href="/criar_receita" class=" button">
-                Criar receita
+                Quero Criar Uma Receita
             </a>
         </div>
     </div>

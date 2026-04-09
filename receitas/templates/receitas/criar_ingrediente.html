@@ -4,17 +4,17 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="{% static 'css/meulivro.css' %}">
-        <title> Página de criação de receita </title>
+        <title> Página de criação de ingredientes </title>
     </head>
     <body>
-        <h1> Vamos criar novas receitas! </h1>
-        <form method="POST" enctype="multipart/form-data" class="Receita_Form"> 
+        <h1> Vamos criar novos ingredientes! </h1>
+        <form method="POST" enctype="multipart/form-data" class="Ingrediente_Form"> 
         {% csrf_token %}
         {{form.as_p}}
-        <button type="submit" class="save btn btn-default"> Criar Receitas</button>
+        <button type="submit" class="save btn btn-default"> Criar ingredientes</button>
         </form>
          <button> 
-            <a href="/criar_ingrediente"> Não tem o ingrediente que queria? Crie um ingrediente </a>
+            <a href="/criar_receita"> Voltar para a criação de receita </a>
         </button>
         <button> 
             <a href="/"> Voltar para a home </a>
