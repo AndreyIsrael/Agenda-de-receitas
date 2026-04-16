@@ -1,0 +1,21 @@
+
+<html>
+    <head>
+        <title> Página de criação de receita </title>
+    </head>
+    <body>
+        <h1> Fazer Login! </h1>
+        <form method="POST" class="Receita_Form"> 
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="save btn btn-default"> Fazer Login</button>
+        </form>
+         <button> 
+            <a href="/register"> Não tem uma conta ainda? Cadastre-se </a>
+        </button>
+        <button> 
+            <a href="/"> Voltar para a home </a>
+        </button>
+    </body>
+
+</html>
