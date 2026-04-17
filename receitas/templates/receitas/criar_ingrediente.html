@@ -7,6 +7,7 @@
         <title> Página de criação de ingredientes </title>
     </head>
     <body>
+        {% if user.is_authenticated %}
         <h1> Vamos criar novos ingredientes! </h1>
         <form method="POST" enctype="multipart/form-data" class="Ingrediente_Form"> 
         {% csrf_token %}
@@ -19,6 +20,12 @@
         <button> 
             <a href="/"> Voltar para a home </a>
         </button>
+        {% else %}
+        <h1> Faça login para ter acesso a essa página </h1>
+        <div class="botao-voltar">
+            <a href="/" class="button"> Voltar para a home</a>
+        </div>
+        {% endif %}
     </body>
 
 </html>

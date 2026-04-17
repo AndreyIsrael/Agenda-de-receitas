@@ -5,8 +5,7 @@ class ReceitaForm(forms.ModelForm):
 
     class Meta:
         model = Receita
-        #author posteriormente vai ser o nome do usuário logado
-        fields = ("author","nome_da_receita","ingredientes","modo_de_preparo","created_date", "published_date", "receita_imagem"  )
+        fields = ("nome_da_receita","ingredientes","modo_de_preparo","created_date", "published_date", "receita_imagem"  )
    
 class  IngredienteForm(forms.ModelForm):
 

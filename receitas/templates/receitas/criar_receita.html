@@ -7,6 +7,7 @@
         <title> Página de criação de receita </title>
     </head>
     <body>
+        {% if user.is_authenticated %}
         <h1> Vamos criar novas receitas! </h1>
         <form method="POST" enctype="multipart/form-data" class="Receita_Form"> 
         {% csrf_token %}
@@ -19,6 +20,12 @@
         <button> 
             <a href="/"> Voltar para a home </a>
         </button>
+        {% else %}
+        <h1> Faça login para ter acesso a essa página </h1>
+        <div class="botao-voltar">
+            <a href="/"> Voltar para a home </a>
+        </div>
+        {% endif %}
     </body>
 
 </html>

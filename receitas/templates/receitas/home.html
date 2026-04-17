@@ -1,24 +1,59 @@
 {% load static %}
 <html>
-    <head>
-        <title>Página inicial do agenda receitas</title>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="{% static 'css/meulivro.css' %}">
-    </head>
-    <body>
-        <div>
-             <h1> Bem vindo à sua agenda de receitas *-* </h1>
-        </div>
-        <div>
-            <p>
-            <a href= /meu_livro_receitas> Meu livro de receitas </href>
-        </p>
-        <p>
-            <a href="/livros_comunidade"> Receitas da comunidade </a>
-        </p>
-            <a class="nav-link" href="{% url 'register'%}"> Register </a>
 
+<head>
+    <title>Página inicial do agenda receitas</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/meulivro.css' %}">
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'home' %}">Sua agenda de receitas</a>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                <li>
+                    <form id="logout-form" action="{% url 'logout' %}" method="post" style="display:none;">
+                        {% csrf_token %}
+                    </form>
+
+                    <a href="javascript:void(0)" onclick="document.getElementById('logout-form').submit();">
+                        <span class="glyphicon glyphicon-log-out"></span> Sair
+                    </a>
+                </li>
+                {% else %}
+                <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Cadastre-se</a></li>
+                <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+                {% endif %}
+            </ul>
         </div>
-    </body>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Bem vindo à sua agenda de receitas *-*</h1>
+        </div>
+        {% if user.is_authenticated %}
+        <div>
+            <p><a href="/meu_livro_receitas" class="btn btn-primary">Meu livro de receitas</a></p>
+            <p><a href="/livros_comunidade" class="btn btn-default">Receitas da comunidade</a></p>
+        </div>
+
+        {% else %}
+        <div>
+            <p><a href="/livros_comunidade" class="btn btn-default">Receitas da comunidade</a></p>
+        </div>
+
+        {% endif %}
+
+
+    </div>
+</body>
+
 </html>
