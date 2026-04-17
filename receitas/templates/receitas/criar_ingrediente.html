@@ -7,6 +7,28 @@
         <title> Página de criação de ingredientes </title>
     </head>
     <body>
+        <div class="container">
+         <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                <li>
+                    <form id="logout-form" action="{% url 'logout' %}" method="post" style="display:none;">
+                        {% csrf_token %}
+                    </form>
+
+                    <a href="javascript:void(0)" onclick="document.getElementById('logout-form').submit();">
+                        <span class="glyphicon glyphicon-log-out"></span> Sair
+                    </a>
+                </li>
+                {% else %}
+                <li><div class="botao-voltar">
+                <a href="/" class=" button">
+                    Voltar pra home</a>
+                </div></li>
+                <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Cadastre-se</a></li>
+                <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+                {% endif %}
+            </ul>
         {% if user.is_authenticated %}
         <h1> Vamos criar novos ingredientes! </h1>
         <form method="POST" enctype="multipart/form-data" class="Ingrediente_Form"> 
