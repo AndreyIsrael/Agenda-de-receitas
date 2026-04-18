@@ -14,7 +14,7 @@ class Ingrediente(models.Model):
     unidade_usada= models.IntegerField(default=1,)
     calorias_unidade=models.IntegerField(default=0)
     created_date = models.DateTimeField(default=timezone.now)
-    published_date = models.DateTimeField(blank=True, null=True)
+    published_date = models.DateTimeField( default=timezone.now)
     ingrediente_imagem= models.ImageField("imagem do ingrediente", null=True, blank=True, upload_to="images/")
     
     @property
@@ -39,7 +39,7 @@ class Receita(models.Model):
     ingredientes=models.ManyToManyField(Ingrediente)
     modo_de_preparo= models.TextField(blank=True)
     created_date = models.DateTimeField(default=timezone.now)
-    published_date = models.DateTimeField(blank=True, null=True)
+    published_date = models.DateTimeField( default=timezone.now)
     receita_imagem= models.ImageField(null=True, blank=True, upload_to="images/")
    
     @property

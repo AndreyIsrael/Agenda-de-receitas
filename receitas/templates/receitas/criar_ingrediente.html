@@ -1,53 +1,67 @@
 {% load static %}
 <html>
-    <head>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="{% static 'css/meulivro.css' %}">
-        <title> Página de criação de ingredientes </title>
-    </head>
-    <body>
-        <div class="container">
-         <ul class="nav navbar-nav navbar-right">
-                {% if user.is_authenticated %}
-                <li>
-                    <form id="logout-form" action="{% url 'logout' %}" method="post" style="display:none;">
-                        {% csrf_token %}
-                    </form>
 
-                    <a href="javascript:void(0)" onclick="document.getElementById('logout-form').submit();">
-                        <span class="glyphicon glyphicon-log-out"></span> Sair
-                    </a>
-                </li>
-                {% else %}
-                <li><div class="botao-voltar">
-                <a href="/" class=" button">
-                    Voltar pra home</a>
-                </div></li>
-                <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Cadastre-se</a></li>
-                <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+<head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/meulivro.css' %}">
+    <title> Página de criação de ingredientes </title>
+</head>
 
-                {% endif %}
-            </ul>
-        {% if user.is_authenticated %}
-        <h1> Vamos criar novos ingredientes! </h1>
-        <form method="POST" enctype="multipart/form-data" class="Ingrediente_Form"> 
+<body>
+    <nav class="navbar navbar-default">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'home' %}">Sua agenda de receitas</a>
+            </div>
+            
+            <div class="container-fluid">
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                    <li>
+                        <form id="logout-form" action="{% url 'logout' %}" method="post" style="display:none;">
+                            {% csrf_token %}
+                        </form>
+
+                        <a href="javascript:void(0)" onclick="document.getElementById('logout-form').submit();">
+                            <span class="glyphicon glyphicon-log-out"></span> Sair
+                        </a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <div class="botao-voltar">
+                            <a href="/" class=" button">
+                                Voltar pra home</a>
+                        </div>
+                    </li>
+                    <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Cadastre-se</a>
+                    </li>
+                    <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+                    {% endif %}
+                </ul>
+            </div>
+    </nav>
+    <div class="container-fluid" style="margin-bottom: 30px">
+    {% if user.is_authenticated %}
+    <h1> Vamos criar novos ingredientes! </h1>
+    <form method="POST" enctype="multipart/form-data" class="Ingrediente_Form">
         {% csrf_token %}
         {{form.as_p}}
         <button type="submit" class="save btn btn-default"> Criar ingredientes</button>
-        </form>
-         <button> 
-            <a href="/criar_receita"> Voltar para a criação de receita </a>
-        </button>
-        <button> 
-            <a href="/"> Voltar para a home </a>
-        </button>
-        {% else %}
-        <h1> Faça login para ter acesso a essa página </h1>
-        <div class="botao-voltar">
-            <a href="/" class="button"> Voltar para a home</a>
-        </div>
-        {% endif %}
-    </body>
+    </form>
+    <button>
+        <a href="/criar_receita"> Voltar para a criação de receita </a>
+    </button>
+    <button>
+        <a href="/"> Voltar para a home </a>
+    </button>
+    {% else %}
+    <h1> Faça login para ter acesso a essa página </h1>
+    <div class="botao-voltar">
+        <a href="/" class="button"> Voltar para a home</a>
+    </div>
+    {% endif %}
+    </div>
+</body>
 
 </html>

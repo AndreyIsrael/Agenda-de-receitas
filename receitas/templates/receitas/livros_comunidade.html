@@ -7,78 +7,109 @@
 </head>
 
 <body>
-    <div class="container text-center">
-         <ul class="nav navbar-nav navbar-right">
-                {% if user.is_authenticated %}
-                <li>
-                    <form id="logout-form" action="{% url 'logout' %}" method="post" style="display:none;">
-                        {% csrf_token %}
-                    </form>
-
-                    <a href="javascript:void(0)" onclick="document.getElementById('logout-form').submit();">
-                        <span class="glyphicon glyphicon-log-out"></span> Sair
-                    </a>
-                </li>
-                {% else %}
-                 <li><div class="botao-voltar">
-                <a href="/" class=" button">
-                    Voltar pra home</a>
-                </div></li>
-                <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Cadastre-se</a></li>
-                <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                
-
-                {% endif %}
-            </ul>
-        <div>
-            {% for receita in receitasall %}
-            <div class="receita-item">
-                <h3>Receita: {{ receita.nome_da_receita }}</h3>
-
-                <h3> Autor: {{ receita.author}} </h3>
-
-                <h2>Calorias: {{ receita.calorias_total_receita }} kcal</h2>
-                {%if receita.receita_imagem%}
-                <img src=" {{ receita.receita_imagem.url}}" width="300">
-                {% endif %}
-
-
-                <h2> Ingredientes:{{receita.ingredientes.all|join:", "}}</h2>
-                {% for ingrediente in receita.ingredientes.all %}
-                <p>Ingrediente: {{ ingrediente.nomeingrediente }} - Calorias: {{ ingrediente.total_calorias_ingrediente}} - Unidade usada-
-                    {{ingrediente.tipo_unidade}}:{{ingrediente.unidade_usada}}
-                    {% if ingrediente.observacoes %}
-                    | <strong>Obs:</strong> <em>{{ ingrediente.observacoes }}</em>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'home' %}">Sua agenda de receitas</a>
+            </div>
+             {% if user.is_authenticated%}
+             <div class="navbar-brand">
+                <li><a href="{% url 'criar_receita' %}"> Criar receitas </a></li>
+            </div>
+            <div class="navbar-brand">
+                <li><a href="{% url 'criar_ingrediente' %}"> Criar Ingredientes </a></li>
+            </div>
+            {% endif %}
+            <div class="container-fluid">
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                    <li>
+                        <form id="logout-form" action="{% url 'logout' %}" method="post" style="display:none;">
+                            {% csrf_token %}
+                        </form>
+                        <a href="javascript:void(0)" onclick="document.getElementById('logout-form').submit();">
+                            <span class="glyphicon glyphicon-log-out"></span> Sair
+                        </a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <div class="botao-voltar">
+                            <a href="/" class="button">Voltar pra home</a>
+                        </div>
+                    </li>
+                    <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Cadastre-se</a></li>
+                    <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     {% endif %}
-                    {%if ingrediente.ingrediente_imagem%}
-                    <img src=" {{ ingrediente.ingrediente_imagem.url}}" width="50" height="50">
-                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 20px;">
+        {% for receita in receitasall %}
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <h4 style="margin: 0 0 4px;">{{ receita.nome_da_receita }}</h4>
+                        <small class="text-muted">por {{ receita.author }} · {{ receita.published_date }}</small>
+                    </div>
+                    <span class="label label-success" style="font-size: 13px; padding: 5px 10px;">
+                        {{ receita.calorias_total_receita }} kcal
+                    </span>
+                </div>
+
+                {% if receita.modo_de_preparo %}
+                <p style="margin-top: 10px; color: #555; font-style: italic;">
+                    <strong>Obs:</strong> {{ receita.modo_de_preparo }}
                 </p>
+                {% endif %}
+
+                {% if receita.receita_imagem %}
+                <img src="{{ receita.receita_imagem.url }}" width="300" style="margin: 10px 0; border-radius: 6px;">
+                {% endif %}
+
+                <hr style="margin: 12px 0;">
+
+                <p style="margin-bottom: 8px;"><strong>Ingredientes:</strong></p>
+                {% for ingrediente in receita.ingredientes.all %}
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap;">
+                    <span class="label label-default">{{ ingrediente.nomeingrediente }}</span>
+                    <small class="text-muted">
+                        {{ ingrediente.total_calorias_ingrediente }} kcal ·
+                        {{ ingrediente.tipo_unidade }}: {{ ingrediente.unidade_usada }}
+                    </small>
+                    {% if ingrediente.observacoes %}
+                    <small><strong>Obs:</strong> <em>{{ ingrediente.observacoes }}</em></small>
+                    {% endif %}
+                    {% if ingrediente.ingrediente_imagem %}
+                    <img src="{{ ingrediente.ingrediente_imagem.url }}" width="40" height="40"
+                        style="border-radius: 4px; object-fit: cover;">
+                    {% endif %}
+                </div>
                 {% endfor %}
 
-                <p>Publicado em: {{ receita.published_date }}</p>
             </div>
-            {% empty %}
-            <p>Ninguém postou receitas ainda ;-; </p>
-            {% endfor %}
         </div>
-        {% if user.is_authenticated %}
-        
-        <div class="botao-criar-receita">
-            <a href="/criar_receita" class=" button">
-                Quero Criar Uma Receita
-            </a>
-        </div>
-            <div class="botao-voltar">
-                <a href="/" class=" button">
-                    Voltar pra home</a>
-            </div>
-        {% else %}
-            <div class="botao-voltar">
-                <a href="/" class=" button">
-                    Voltar pra home
-                </a>
-            </div>
-        {% endif %}
-        
+
+        {% empty %}
+        <p class="text-center">Ninguém postou receitas ainda ;-;</p>
+        {% endfor %}
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="text-center" style="margin: 20px 0;">
+        <a href="/criar_receita" class="button">Quero Criar Uma Receita</a>
+    </div>
+    <div class="text-center botao-voltar">
+        <a href="/" class="button">Voltar pra home</a>
+    </div>
+    {% else %}
+    <div class="text-center botao-voltar">
+        <a href="/" class="button">Voltar pra home</a>
+    </div>
+    {% endif %}
+
 </body>

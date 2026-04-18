@@ -14,44 +14,62 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="{% url 'home' %}">Sua agenda de receitas</a>
             </div>
+            {% if user.is_authenticated%}
+             <div class="navbar-brand">
+                <li><a href="{% url 'criar_receita' %}"> Criar receitas </a></li>
+            </div>
+            <div class="navbar-brand">
+                <li><a href="{% url 'criar_ingrediente' %}"> Criar Ingredientes </a></li>
+            </div>
+            {% endif %}
 
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                 <li>
+                    
                     <form id="logout-form" action="{% url 'logout' %}" method="post" style="display:none;">
                         {% csrf_token %}
                     </form>
-
+                    
                     <a href="javascript:void(0)" onclick="document.getElementById('logout-form').submit();">
                         <span class="glyphicon glyphicon-log-out"></span> Sair
                     </a>
+                    
                 </li>
+
+        
                 {% else %}
                 <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Cadastre-se</a></li>
                 <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-
                 {% endif %}
             </ul>
         </div>
     </nav>
 
-    <div class="container text-center">
-        <div class="page-header">
-            <h1>Bem vindo à sua agenda de receitas *-*</h1>
-        </div>
-        {% if user.is_authenticated %}
-        <div>
-            <p><a href="/meu_livro_receitas" class="btn btn-primary">Meu livro de receitas</a></p>
-            <p><a href="/livros_comunidade" class="btn btn-default">Receitas da comunidade</a></p>
-        </div>
+    <div class="container text-center" style="margin-top: 60px;">
 
+        <p style="font-size: 11px; color: #888; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px;">
+            sua coleção pessoal
+        </p>
+
+        <h1 style="font-size: 28px; font-weight: 500; margin-bottom: 10px;">
+            Bem vindo à sua agenda de receitas *-*
+        </h1>
+
+        <p style="color: #888; font-size: 15px; margin-bottom: 32px;">
+            guarde, organize e descubra receitas da comunidade
+        </p>
+
+        {% if user.is_authenticated %}
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+            <a href="/meu_livro_receitas" class="btn btn-primary">Meu livro de receitas</a>
+            <a href="/livros_comunidade" class="btn btn-default">Receitas da comunidade</a>
+        </div>
         {% else %}
         <div>
-            <p><a href="/livros_comunidade" class="btn btn-default">Receitas da comunidade</a></p>
+            <a href="/livros_comunidade" class="btn btn-default">Receitas da comunidade</a>
         </div>
-
         {% endif %}
-
 
     </div>
 </body>

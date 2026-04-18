@@ -3,7 +3,6 @@ from django.utils import timezone
 from .models import Receita, Ingrediente
 from .forms import ReceitaForm, IngredienteForm
 from django.shortcuts import render, redirect
-
 def home(request):
     return render(request, 'receitas/home.html', {})
 
@@ -35,7 +34,8 @@ def criar_ingrediente(request):
          form = IngredienteForm(request.POST, request.FILES)
          if form.is_valid():
               form.save()
-              return redirect('/')
+              return redirect('/criar_receita')
+         
     else:
          form=IngredienteForm()
           

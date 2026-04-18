@@ -1,14 +1,21 @@
 {% load static %}
 <html>
-    <head>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="{% static 'css/meulivro.css' %}">
-        <title> Página de criação de receita </title>
-    </head>
-    <body>
-        <div class="container">
-         <ul class="nav navbar-nav navbar-right">
+
+<head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/meulivro.css' %}">
+    <title> Página de criação de receita </title>
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'home' %}"> Sua agenda de receitas</a>
+        </div>
+        
+        <div class="container-fluid">
+            <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                 <li>
                     <form id="logout-form" action="{% url 'logout' %}" method="post" style="display:none;">
@@ -20,28 +27,32 @@
                     </a>
                 </li>
                 {% else %}
-                <li><div class="botao-voltar">
-                <a href="/" class=" button">
-                    Voltar pra home</a>
-                </div></li>
+                <li>
+                    <div class="botao-voltar">
+                        <a href="/" class=" button">
+                            Voltar pra home</a>
+                    </div>
+                </li>
                 <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Cadastre-se</a></li>
                 <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 
                 {% endif %}
             </ul>
+        </div>
+    </nav>
 
-        {% if user.is_authenticated %}
-        
+    {% if user.is_authenticated %}
+    <div class="container-fluid" style="margin-bottom: 30px;">
         <h1> Vamos criar novas receitas! </h1>
-        <form method="POST" enctype="multipart/form-data" class="Receita_Form"> 
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit" class="save btn btn-default"> Criar Receitas</button>
+        <form method="POST" enctype="multipart/form-data" class="Receita_Form">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit" class="save btn btn-default"> Criar Receitas</button>
         </form>
-         <button> 
+        <button>
             <a href="/criar_ingrediente"> Não tem o ingrediente que queria? Crie um ingrediente </a>
         </button>
-        <button> 
+        <button>
             <a href="/"> Voltar para a home </a>
         </button>
         {% else %}
@@ -50,6 +61,7 @@
             <a href="/"> Voltar para a home </a>
         </div>
         {% endif %}
-    </body>
+    </div>
+</body>
 
 </html>
