@@ -1,3 +1,4 @@
+{% load crispy_forms_tags %}
 {% load static %}
 <html>
 
@@ -40,13 +41,15 @@
                     {% endif %}
                 </ul>
             </div>
+          
     </nav>
     <div class="container-fluid" style="margin-bottom: 30px">
+    
     {% if user.is_authenticated %}
     <h1> Vamos criar novos ingredientes! </h1>
     <form method="POST" enctype="multipart/form-data" class="Ingrediente_Form">
         {% csrf_token %}
-        {{form.as_p}}
+        {{ form|crispy }}
         <button type="submit" class="save btn btn-default"> Criar ingredientes</button>
     </form>
     <button>

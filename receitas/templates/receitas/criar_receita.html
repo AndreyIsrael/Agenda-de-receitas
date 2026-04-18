@@ -1,3 +1,4 @@
+{% load crispy_forms_tags %}
 {% load static %}
 <html>
 
@@ -46,7 +47,7 @@
         <h1> Vamos criar novas receitas! </h1>
         <form method="POST" enctype="multipart/form-data" class="Receita_Form">
             {% csrf_token %}
-            {{form.as_p}}
+            {{ form|crispy }}
             <button type="submit" class="save btn btn-default"> Criar Receitas</button>
         </form>
         <button>
